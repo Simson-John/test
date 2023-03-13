@@ -1,0 +1,162 @@
+class variable():
+    id = 1001
+    name = []
+    mark = []
+    result = []
+    psd = []
+    rno = []
+    c = 0
+    attended = []
+
+class mod(variable):
+    def __init__(self):
+        while True:
+            print("1.Staff\n2.Student\n3.Exit")
+            n = int(input())
+            try:
+                if n == 1:
+                    self.staff_core()
+                if n == 2:
+                    self.student_main()
+                if n == 3:
+                    break
+            except:
+                print("Invalid Input")
+
+    def staff_core(self):
+        while True:
+            print("1.Create Exam\n2.Student Report\n3.Approve\n4.Main Menu")
+            n = int(input())
+            if n == 1:
+                self.create_exam()
+            if n == 2:
+                self.std_report()
+            if n == 3:
+                self.std_approve()
+            if n == 4:
+                break
+
+    def create_exam(self):
+        n = int(input("Enter the No.of Questions: "))
+        m = []
+        f = 1
+        self.a = {}
+        for i in range(n):
+            print("Enter the questions: ")
+            q = []
+            y = input()
+            q.append(y)
+            print("Enter four options: ")
+            o = [i for i in input().split()][:5]
+            print("Enter the Correct Answer: ")
+            crt = input()
+            o.append(crt)
+            q.extend(o)
+            m.append(q)
+            o.clear()
+        for i in range(len(m)):
+            p = m[0][i]
+            l = m[i][1:]
+            w = {p: l}
+            self.a.update(w)
+        print("QUESTIONS CREATED ")
+
+    def std_report(self):
+        for i in range(variable.c):
+            print("Id", {variable.rno[i]}, "Name", {variable.name[i]}, "Mark", {variable.mark[i]}, "Result",
+                  {variable.result[i]})
+
+    def std_approve(self):
+        if variable.c == 0:
+            print("No one is here, go away")
+        else:
+            for i in range(variable.c):
+                if variable.mark[i] > (len(self.a) // 2) and variable.attended[i] == 1:
+                    variable.result[i] = 'pass'
+                elif variable.attended[i] == 0:
+                    variable.result[i] = 'Not Evaluated'
+                else:
+                    variable.result[i] = 'fail'
+            print("Approved")
+
+    def student_main(self):
+        while True:
+            print("1.Register\n2.Login\n3.Main Menu")
+            n = int(input())
+            try:
+                if n == 1:
+                    self.std_reg()
+                if n == 2:
+                    self.std_log()
+                if n == 3:
+                    break
+            except:
+                print("Invalid Input")
+
+    def std_reg(self):
+        variable.rno.append(variable.id)
+        name = input("Enter Your Name: ")
+        variable.name.append(name)
+        password = input("Please enter your Password: ")
+        variable.psd.append(password)
+        mark = 0
+        variable.mark.append(mark)
+        result = "No Result Found"
+        variable.result.append(result)
+        print("REGISTRATION DONE, YOU CAN LOGIN NOW ")
+        print("Your ID:", variable.id)
+        variable.attended.append(0)
+        variable.id += 1
+        variable.c += 1
+
+    def std_log(self):
+            lrn = int(input("Enter Your ID: "))
+            lpsd = input("Enter Your Password: ")
+
+            if lrn in variable.rno and lpsd in variable.psd:
+                print("Login Success 👍")
+                while True:
+                    print("1.Attend Exam\n2.Show Result\n3.Logout")
+                    x = int(input())
+                    try:
+                        if x == 1:
+                            self.std_attend()
+                        if x == 2:
+                            self.std_sres()
+                        if x == 3:
+                            break
+
+                    except:
+                        print("Invalid Input")
+
+            else:
+                print("Roll.No/Password is Wrong")
+
+    def std_attend(self):
+        aid = int(input("Enter Your ID: "))
+        print("Welcome", variable.name[(aid % 10)-1])
+        try:
+            if len(self.a) > 0:
+                for i in self.a:
+                    print("Questions: ", i)
+                    # print("Options: ")
+                    l = self.a[i]
+                    op = 1
+                    for j in range(0,len(l)-1):
+                        print("Options", op, ":", l[j])
+                        op += 1
+                    crt = input('Enter your answer:')
+                    if crt == l[-1]:
+                        variable.mark[(aid % 10) - 1] += 1
+                    variable.attended[(aid % 10) - 1] = 1
+                    print('Exam completed')
+        except:
+            print('Questions Not created')
+
+    def std_sres(self):
+        sid = int(input("Enter Your ID: "))
+        print("ID: ",variable.rno[(sid % 10)-1], "Result: ", variable.result[(sid % 10)-1])
+
+z = mod()
+
+
