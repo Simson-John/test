@@ -68,7 +68,7 @@ class mod(variable):
 
     def std_approve(self):
         if variable.c == 0:
-            print("No one is here, go away")
+            print("Student didn't registered yet")
         else:
             for i in range(variable.c):
                 if variable.mark[i] > (len(self.a) // 2) and variable.attended[i] == 1:
